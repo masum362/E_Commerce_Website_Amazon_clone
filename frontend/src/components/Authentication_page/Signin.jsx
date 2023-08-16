@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './signup.css';
 import logo from '../../assets/amazon_logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ScaleLoader } from 'react-spinners';
@@ -13,6 +13,7 @@ import { LoginContext } from '../context/AccountContext';
 
 const Signin = () => {
     const { account, setAccount } = useContext(LoginContext)
+    const navigate = useNavigate();
 
     const [isloading, setIsloading] = useState(false);
     useEffect(() => {
@@ -32,16 +33,18 @@ const Signin = () => {
         }),
         onSubmit: async (values) => {
             await axios.post('http://localhost:3002/login', values, { withCredentials: true }).then(res => {
-                if (!res || res.status !== 201) {
-                    toast.warning('Invalid credentials');
-                }
-                else {
-                    toast.success("user logged in successfully")
+                if (res.status== 201) {
                     setAccount(res.data)
                     formik.resetForm();
+                    navigate('/')
+                    toast.warning("login successfully")
+                }
+                else{
+                    toast.warning("invalid details")
                 }
             }).catch(err => {
-                console.log(err);
+                toast.warning("invalid details")
+                   
             })
         },
 

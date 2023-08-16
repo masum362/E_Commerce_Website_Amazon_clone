@@ -2,25 +2,20 @@ import React, { useEffect, useState } from 'react'
 
 const Subtotal = ({account}) => {
 
-
-  account.cart.map(item => {
-    console.log(item.price.cost)
-  })
-
-
   const [ price , setPrice ] = useState(0)
 
   const totalAmount = () => {
     let price = 0
-     if(account.cart.length){
-      account.cart.map(item => {
-        price += item.price.cost
+     if(account.cart?.length){
+      account.cart.map(items => {
+        // console.log(items._Id)
+        const product = (items.item)
+        price +=product.price?.cost
       })
      }
     setPrice(price)
     
 }
-console.log(price)
 
 useEffect(() => {
   totalAmount();

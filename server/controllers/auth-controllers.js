@@ -51,7 +51,10 @@ export const userLogin = async (req, res) => {
 
   try {
     const isUser = await userModel.findOne({ email: email });
-    if (isUser) {
+
+    if (!isUser) {
+      return res.status(501).json("invalid user");
+    } else {
       const isMatch = await bcryptjs.compare(password, isUser.password);
       if (isMatch) {
         const token = await isUser.getUserAuthToken();
@@ -64,8 +67,6 @@ export const userLogin = async (req, res) => {
       } else {
         return res.status(404).json({ message: "invalid user" });
       }
-    } else {
-      return res.json(404).json("invalid user");
     }
   } catch (error) {
     return res.status(501).json({ message: "Something went wrong" });
@@ -78,6 +79,7 @@ export const cartUser = async (req, res) => {
     const cartItem = await productsModel.findOne({ _id: id });
     const UserContact = await userModel.findOne({ _id: req.userId });
     if (UserContact) {
+      console.log(UserContact);
       const cartData = UserContact.addToCart(cartItem);
       await UserContact.save();
       return res.status(201).json({ UserContact });
@@ -100,9 +102,9 @@ export const getAccountDetails = async (req, res) => {
   }
 };
 
-export const userLogOut = async(req, res) => {
+export const userLogOut = async (req, res) => {
   try {
-    req.rootUser.tokens =await req.rootUser.tokens.filter((currentelement) => {
+    req.rootUser.tokens = await req.rootUser.tokens.filter((currentelement) => {
       return currentelement.token !== req.token;
     });
     await req.rootUser.save();
@@ -114,14 +116,11 @@ export const userLogOut = async(req, res) => {
   }
 };
 
-
-
-
-export const removeCartItem = async(req, res) => {
+export const removeCartItem = async (req, res) => {
   try {
-    const {id} = req.params
-console.log(id)
-    req.rootUser.cart =  await req.rootUser.cart.filter((currentelement) => {
+    const { id } = req.params;
+    console.log(id);
+    req.rootUser.cart = await req.rootUser.cart.filter((currentelement) => {
       return currentelement.id !== id;
     });
     await req.rootUser.save();
@@ -132,3 +131,37 @@ console.log(id)
   }
 };
 
+export const incrementCartItem = async (req, res) => {
+  const { id } = req.params;
+  console.log('calling');
+  return res.json({message:"CALLING"})
+  //   try {
+  //     const {id} = req.params
+  // console.log(id)
+  //     req.rootUser.cart =  await req.rootUser.cart.filter((currentelement) => {
+  //       return currentelement.id !== id;
+  //     });
+  //     await req.rootUser.save();
+  //     return res.status(201).json(req.rootUser);
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).json("something went wrong");
+  //   }
+};
+
+export const decrementCartItem = async (req, res) => {
+  const { id } = req.params;
+  console.log('calling');
+  //   try {
+  //     const {id} = req.params
+  // console.log(id)
+  //     req.rootUser.cart =  await req.rootUser.cart.filter((currentelement) => {
+  //       return currentelement.id !== id;
+  //     });
+  //     await req.rootUser.save();
+  //     return res.status(201).json(req.rootUser);
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).json("something went wrong");
+  //   }
+};

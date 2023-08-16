@@ -25,7 +25,8 @@ const userShema = new mongoose.Schema({
     type: Number,
     required: true,
     unique: true,
-    maxlength: 11,
+    minlength: [8, 'Field length must be at least 8 characters'],
+    maxlength: 14,
   },
   password: {
     type: String,
@@ -45,7 +46,18 @@ const userShema = new mongoose.Schema({
       },
     },
   ],
-  cart:  [],
+  cart:  [
+    {
+      item:{
+        type:Object,
+        required: true,
+      },
+      quantity:{
+        type: Number,
+        required: true,
+      }
+    }
+  ],
 });
 
 
@@ -76,12 +88,16 @@ userShema.methods.getUserAuthToken = async function(){
 
 userShema.methods.addToCart = async function(cartItem){
   try {
-    this.cart = await this.cart.concat(cartItem)
+    this.cart = await this.cart.concat({
+      item:cartItem,
+      quantity:1
+    })
     return this.cart;
   } catch (error) {
     return new Error(error);
   }
 }
+
 
 const userModel = new mongoose.model("user", userShema);
 

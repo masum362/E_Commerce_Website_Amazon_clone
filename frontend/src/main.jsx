@@ -5,6 +5,7 @@ import store from './Store.jsx'
 import { Provider } from 'react-redux'
 import AccountContexxt from './components/context/AccountContext.jsx'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AccountContexxt>
     <Provider store={store}>

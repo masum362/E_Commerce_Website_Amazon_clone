@@ -52,13 +52,17 @@ const Cart = () => {
         contentType: 'application/json'
       }
     }).then(res => {
-      toast.success("product added in your cart")
+      toast.success("product added in your cart",{
+        position:'top-right'
+      })
       setAccount(res.data.UserContact)
       navigate('/buynow');
     }).catch(err => {
       // console.log(err)
       if (err.response.data.message == "not authorized") {
-        toast.warning("Please login first")
+        toast.warning("Please login first",{
+          position:'top-right'
+        })
         navigate('/signin')
       }
     })

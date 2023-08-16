@@ -132,8 +132,9 @@ const handleAfterClick =() => {
           <div className='cart_btn'>
 
             <NavLink to="/buynow" type="button" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white  rounded-lg ">
-              <i className="fa-solid fa-cart-shopping icon"></i>
-              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-white " >{account ? account.cart.length : 0}</div>
+            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-white " >{account ? account.cart.length : 0}</div>
+              <i className="fa-solid fa-cart-shopping text-yellow-600" id='icon'></i>
+           
             </NavLink>
 
           </div>

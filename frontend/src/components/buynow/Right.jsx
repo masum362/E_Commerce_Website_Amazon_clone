@@ -10,9 +10,10 @@ const Right = ({account}) => {
  
     const totalAmount = () => {
       let price = 0
-       if(account.cart.length){
-        account.cart.map(item => {
-          price += item.price.cost
+       if(account.cart?.length){
+        account.cart.map(items => {
+          const item = (items.item)
+          price += item.price?.cost
         })
        }
       setPrice(price)

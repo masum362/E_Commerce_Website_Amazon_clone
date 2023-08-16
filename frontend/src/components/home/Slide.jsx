@@ -27,7 +27,7 @@ const responsive = {
 
 
 const Slide = ({ title,products }) => {
-  console.log(products)
+  
 
   return (
     <div className='products_section'>
@@ -39,7 +39,7 @@ const Slide = ({ title,products }) => {
       <Carousel
         responsive={responsive}
         infinite={true}
-        draggable={false}
+        draggable={true}
         swipeable={true}
         showDots={false}
         centerMode={true}

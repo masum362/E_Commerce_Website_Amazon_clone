@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './signup.css'
 import logo from '../../assets/amazon_logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ScaleLoader } from 'react-spinners';
@@ -20,12 +20,13 @@ const Signup = () => {
     }, [])
 
     const [user, setUser] = useState({});
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
             name: "",
             email: "",
-            mobile: "",
+            mobile: parseInt(),
             password: "",
             cpassword: "",
         },
@@ -43,6 +44,7 @@ const Signup = () => {
                     toast.success('Registration Successfull!', {
                         position: "top-right",
                     })
+                    navigate('/signin')
                 }
 
             }).catch(err => { 
@@ -82,7 +84,7 @@ const Signup = () => {
                         </div>
                         <div className="form_data">
                             <label htmlFor="mobile">Mobile</label>
-                            <input type="text" name='mobile' id='mobile' value={formik.values.mobile} onChange={formik.handleChange} />
+                            <input type="number" name='mobile' id='mobile' value={formik.values.mobile} onChange={formik.handleChange} />
                             {formik.touched.mobile && formik.errors.mobile ? (
                                 <div>{formik.errors.mobile}</div>
                             ) : null}
