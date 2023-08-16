@@ -119,12 +119,8 @@ export const userLogOut = async (req, res) => {
 export const removeCartItem = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log({id});
-    console.log("req.rootuser : ",req.rootUser)
     req.rootUser.cart = await req.rootUser.cart.filter((currentelement) => {
-      currentelement.item.filter((elem) => {
-       return elem.id !== id;
-      })
+      return currentelement.id !== id;
     });
     await req.rootUser.save();
     return res.status(201).json(req.rootUser);

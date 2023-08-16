@@ -40,11 +40,17 @@ const Signup = () => {
         }),
         onSubmit: async (values) => {
             await axios.post(`${base_url}/register`, values).then(res => {
-                console.log(res.status)
                 if (res.status === 201) {
-                    toast.success('Registration Successfull!', {
+                    toast.success('registration successfull', {
                         position: "top-right",
-                    })
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
                     navigate('/signin')
                 }
 

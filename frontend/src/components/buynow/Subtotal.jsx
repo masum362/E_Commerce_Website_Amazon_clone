@@ -6,10 +6,10 @@ const Subtotal = ({account}) => {
 
   const totalAmount = () => {
     let price = 0
-     if(account.cart?.length){
-      account.cart.map(items => {
+     if(account?.cart?.length){
+      account.cart?.map(product => {
         // console.log(items._Id)
-        const product = (items.item)
+        
         price +=product.price?.cost
       })
      }

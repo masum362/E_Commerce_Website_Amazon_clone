@@ -73,29 +73,32 @@ const Buynow = () => {
           <span className='leftbuyspanrice'>Price</span>
           <hr />
 
-          {account ? account.cart.map((items) => {
+          {account ? account.cart.map((item) => {
+
+            console.log({item})
             // const item = (items.item);
             // const id = item._id
 
             // console.log({ item })
             return (
-              <div className="item_containert" key={items._id}>
-                <img src={items?.item?.detailUrl} alt="" />
+              <div className="item_containert" key={item._id}>
+                <img src={item?.detailUrl} alt="" />
                 <div className="item_details">
-                  <h3>{items?.item?.title.longTitle}</h3>
-                  <h3>{items?.item?.title?.shortTitle}</h3>
-                  <h3 className='diffrentprice'>₹{items?.item?.price?.cost}</h3>
+                  <h3>{item?.title.longTitle}</h3>
+                  <h3>{item?.title?.shortTitle}</h3>
+                  <h3 className='diffrentprice'>₹{item?.price?.cost}</h3>
                   <p className='unusuall'>Usually dispatched in 8 days</p>
                   <p>Eligible for free shipping</p>
                   <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt="" />
                   <div>
-                    <button onClick={() => handleDecrement(items?.item?.id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center">-</button>
-                    <button className="text-xl w-6 h-6  rrounded my-4 mx-1 ">{items.quantity}</button>
-                    <button onClick={() => handleIncrement(items?.item?.id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center">+</button>
+                    <button onClick={() => handleDecrement(item?.id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center">-</button>
+                    <button className="text-xl w-6 h-6  rrounded my-4 mx-1 ">{item.quantity}</button>
+                    <button onClick={() => handleIncrement(item?.id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center">+</button>
                   </div>
+                  <Option deletedata={item?.id} itemid={item?.id} />
                 </div>
-                <h3 className="item_price">₹{items?.item?.price?.cost}</h3>
-                <Option deletedata={items?.item?.id} itemid={items?.item?.id} />
+                <h3 className="item_price">₹{item?.price?.cost}</h3>
+                
                 <hr />
               </div>
             )

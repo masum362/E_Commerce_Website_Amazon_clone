@@ -38,7 +38,16 @@ const Signin = () => {
                     setAccount(res.data)
                     formik.resetForm();
                     navigate('/')
-                    toast.warning("login successfully")
+                    toast.success('login successfully', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
                 }
                 else{
                     toast.warning("invalid details")
@@ -93,7 +102,20 @@ const Signin = () => {
                 aria-label="Loading Spinner"
                 data-testid="loader"
             />}
-            <ToastContainer />
+            <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
+{/* Same as */}
+<ToastContainer />
         </section>
     )
 }

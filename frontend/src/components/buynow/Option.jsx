@@ -20,14 +20,11 @@ const Option = ({ itemid }) => {
       },
       withCredentials: true
     }).then(res => {
-      console.log(res)
       setAccount(res.data)
     }).catch(err => console.log(err))
   }
 
-useEffect(() => {
-  deleteItem();
-},[])
+
 
   return (
     <div className="add_remove_select">
