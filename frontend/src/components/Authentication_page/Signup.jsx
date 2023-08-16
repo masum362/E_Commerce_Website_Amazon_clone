@@ -8,6 +8,7 @@ import { ScaleLoader } from 'react-spinners';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { base_url } from '../../../base.js';
 
 
 const Signup = () => {
@@ -38,7 +39,7 @@ const Signup = () => {
             cpassword: Yup.string().min(6, "Too Short!").max(20, "Too Long!").required('Required!').oneOf([Yup.ref('password'), null], 'Passwords must match')
         }),
         onSubmit: async (values) => {
-            await axios.post("http://localhost:3002/register", values).then(res => {
+            await axios.post(`${base_url}/register`, values).then(res => {
                 console.log(res.status)
                 if (res.status === 201) {
                     toast.success('Registration Successfull!', {

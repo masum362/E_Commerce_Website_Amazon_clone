@@ -19,26 +19,26 @@ const Banner = () => {
   ]
   return (
     <div >
-            <Carousel 
-            infiniteLoop
-            autoPlay
-            interval={1000}
-            stopOnHover
-            showThumbs={false}
-            showStatus={false}
-            >
-               
-    {data.map(img => {
-      return (
-        <div key={new Date().getTime()*Math.random()*1000}>
-           <img src={img} alt='banner' className="banner_img"/>
-        </div>
-       
-      )
-    })}
+      <Carousel
+        infiniteLoop
+        autoPlay
+        interval={1000}
+        stopOnHover
+        showThumbs={false}
+        showStatus={false}
+      >
 
-            </Carousel>
-        </div>
+        {data.map(img => {
+          return (
+            <div key={new Date().getTime() * Math.random() * 1000}>
+              <img src={img} alt='banner' className="banner_img" />
+            </div>
+
+          )
+        })}
+
+      </Carousel>
+    </div>
   )
 }
 

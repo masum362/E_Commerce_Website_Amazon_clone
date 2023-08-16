@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { LoginContext } from '../context/AccountContext';
+import { base_url } from '../../../base.js';
 
 const Option = ({ itemid }) => {
 
@@ -11,7 +12,7 @@ const Option = ({ itemid }) => {
 
   const deleteItem = async(itemid) => {
 
-    await axios(`http://localhost:3002/remove/${itemid}`,{
+    await axios(`${base_url}/remove/${itemid}`,{
       method:"DELETE",
       headers:{
         "Content-Type": "application/json",
@@ -19,9 +20,15 @@ const Option = ({ itemid }) => {
       },
       withCredentials: true
     }).then(res => {
+      console.log(res)
       setAccount(res.data)
     }).catch(err => console.log(err))
   }
+
+useEffect(() => {
+  deleteItem();
+},[])
+
   return (
     <div className="add_remove_select">
       <select>

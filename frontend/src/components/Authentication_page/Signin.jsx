@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { LoginContext } from '../context/AccountContext';
+import { base_url } from '../../../base.js';
 
 
 const Signin = () => {
@@ -32,7 +33,7 @@ const Signin = () => {
             password: Yup.string().min(6, "At least 6 char").max(20, 'Must be 20 characters or less').required('Required'),
         }),
         onSubmit: async (values) => {
-            await axios.post('http://localhost:3002/login', values, { withCredentials: true }).then(res => {
+            await axios.post(`${base_url}/login`, values, { withCredentials: true }).then(res => {
                 if (res.status== 201) {
                     setAccount(res.data)
                     formik.resetForm();

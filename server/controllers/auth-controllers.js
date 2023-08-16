@@ -119,9 +119,12 @@ export const userLogOut = async (req, res) => {
 export const removeCartItem = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    console.log({id});
+    console.log("req.rootuser : ",req.rootUser)
     req.rootUser.cart = await req.rootUser.cart.filter((currentelement) => {
-      return currentelement.id !== id;
+      currentelement.item.filter((elem) => {
+       return elem.id !== id;
+      })
     });
     await req.rootUser.save();
     return res.status(201).json(req.rootUser);
@@ -133,7 +136,7 @@ export const removeCartItem = async (req, res) => {
 
 export const incrementCartItem = async (req, res) => {
   const { id } = req.params;
-  console.log('calling');
+  console.log({id});
   return res.json({message:"CALLING"})
   //   try {
   //     const {id} = req.params

@@ -1,5 +1,2 @@
-import { json } from "react-router-dom"
-
-export const base_url = JSON.stringify(import.meta.env_VITE_REACT_APP_URL)
-
-console.log(base_url)
+// this is the base url which we decleared in env files.
+export const base_url = import.meta.env.VITE_URL

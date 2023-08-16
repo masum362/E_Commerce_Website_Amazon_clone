@@ -7,18 +7,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {base_url} from '../../../base.js';
+import Option from './Option';
 
-import {base_url} from '../../../base.js'
 const Buynow = () => {
-
-
-console.log({base_url})
-
-
-
-
-
-
 
   const { account, setAccount } = useContext(LoginContext)
   const navigate = useNavigate();
@@ -45,7 +37,7 @@ console.log({base_url})
 
   const handleDecrement =async (id) => {
     console.log(id)
-    await axios(`/decrement/`, {
+    await axios(`${base_url}/decrement/`, {
       method: 'GET',
       withCredentials: true,
       headers: {
@@ -59,8 +51,8 @@ console.log({base_url})
 
   const handleIncrement = async (id) => {
     console.log(id)
-    await axios(`/increment/`, {
-      method: 'GET',
+    await axios(`${base_url}/increment/${id}`, {
+      method: 'POST',
       withCredentials: true,
       headers: {
         Accept: 'application/json',
@@ -103,7 +95,7 @@ console.log({base_url})
                   </div>
                 </div>
                 <h3 className="item_price">₹{items?.item?.price?.cost}</h3>
-
+                <Option deletedata={items?.item?.id} itemid={items?.item?.id} />
                 <hr />
               </div>
             )

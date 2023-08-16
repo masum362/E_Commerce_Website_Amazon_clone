@@ -5,6 +5,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../context/AccountContext'
 import axios from 'axios'
 import { useSelector } from 'react-redux';
+import { base_url } from '../../../base';
+
+
+
 const Navbar = () => {
 
   const { account, setAccount } = useContext(LoginContext);
@@ -16,7 +20,7 @@ const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
 
   const getAccountDetails = async () => {
-    await axios.get("http://localhost:3002/getaccountdetails",
+    await axios.get(`${base_url}/getaccountdetails`,
       { withCredentials: true })
       .then(response => {
         setAccount(response.data)
@@ -35,7 +39,7 @@ const Navbar = () => {
 
   const logOut = async () => {
 
-    await axios('http://localhost:3002/logout', {
+    await axios(`${base_url}/logout`, {
       method: 'GET',
       headers: {
         contentType: 'application/json',
@@ -54,9 +58,9 @@ const Navbar = () => {
     setSearchInput(e.target.value);
   }
 
-const handleAfterClick =() => {
-  setSearchInput('')
-}
+  const handleAfterClick = () => {
+    setSearchInput('')
+  }
 
 
   return (
@@ -112,7 +116,7 @@ const handleAfterClick =() => {
             {searchInput && <div className='extrasearch'>
               <ul className=' m3'>
                 {products.filter(product => product.title.longTitle.toLowerCase().includes(searchInput.toLowerCase())).map(product => (
-                  <NavLink className={"p4 hover:bg-blue-gray-200 block"} to={`/singleproduct/${product._id}`} onClick={()=>handleAfterClick()}>{product.title.longTitle}</NavLink>
+                  <NavLink className={"p4 hover:bg-blue-gray-200 block"} to={`/singleproduct/${product._id}`} onClick={() => handleAfterClick()}>{product.title.longTitle}</NavLink>
                 ))}
               </ul>
             </div>}
@@ -132,9 +136,9 @@ const handleAfterClick =() => {
           <div className='cart_btn'>
 
             <NavLink to="/buynow" type="button" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white  rounded-lg ">
-            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-white " >{account ? account.cart.length : 0}</div>
+              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-white " >{account ? account.cart.length : 0}</div>
               <i className="fa-solid fa-cart-shopping text-yellow-600" id='icon'></i>
-           
+
             </NavLink>
 
           </div>

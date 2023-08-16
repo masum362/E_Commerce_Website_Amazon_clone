@@ -6,6 +6,7 @@ import { ScaleLoader } from 'react-spinners';
 import { LoginContext } from '../context/AccountContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { base_url } from '../../../base.js';
 
 
 const Cart = () => {
@@ -44,7 +45,7 @@ const Cart = () => {
   const navigate = useNavigate()
 
   const addToCart = async (id) => {
-    await axios(`http://localhost:3002/cart/${id}`, {
+    await axios(`${base_url}/cart/${id}`, {
       method: 'POST',
       withCredentials: true,
       headers: {
