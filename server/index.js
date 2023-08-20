@@ -4,7 +4,7 @@ import connection from './db/connection.js';
 import cors from 'cors';
 import router from './routes/api.js';
 import cookieParser from 'cookie-parser';
-import authentication from './middleware/authenticate.js';
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
@@ -16,7 +16,9 @@ app.options('*', cors({origin: true, credentials: true}))
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-
+app.use(fileUpload({
+    useTempFiles:true,
+}))
 app.use('/',router)
 
 

@@ -46,7 +46,16 @@ const userShema = new mongoose.Schema({
   ],
   cart:Array,
   orders:Array,
+  role:{
+    type: String,
+    enum:['admin','user','manager'],
+    default:'user',
+  },
 });
+
+
+
+
 
 userShema.pre("save", async function (next) {
   if (this.isModified("password")) {
