@@ -6,6 +6,7 @@ import router from './routes/api.js';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
 
+
 dotenv.config();
 
 
@@ -26,9 +27,9 @@ app.use('/',router)
 
 
 const port = process.env.PORT || 3002;
-const password = process.env.password
+const mongodbURI = process.env.mongodbURI
 
-connection(password)
+connection(mongodbURI)
 app.listen(port , (req,res)=> {
     console.log(`server listening on port ${port}`);
 })

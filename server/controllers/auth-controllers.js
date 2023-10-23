@@ -51,9 +51,13 @@ export const userRegister = async (req, res) => {
         cpassword,
       });
       const user = await newUser.save();
+      console.log(user)
       return res.status(201).json(user);
     }
   } catch (error) {
+    console.log(
+    error
+    )
     return res.status(501).json({ message: "something went wrong" });
   }
 };
@@ -90,9 +94,23 @@ export const cartUser = async (req, res) => {
   try {
     const cartItem = await productsModel.findOne({ _id: id });
     const UserContact = await userModel.findOne({ _id: req.userId });
+    const {_id , url, detailUrl , title ,price , description , discount , tagline , rating } = cartItem
+
+    const cartProduct  = { 
+      productID:_id,
+    url,
+    detailUrl,
+    title,
+    price,
+    description,
+    discount,
+    tagline,
+    rating,
+
+    }
     if (UserContact) {
       console.log(UserContact);
-      const cartData = UserContact.addToCart(cartItem);
+      const cartData = UserContact.addToCart(id ,cartProduct);
       await UserContact.save();
       return res.status(201).json({ UserContact });
     } else {
@@ -116,11 +134,8 @@ export const getAccountDetails = async (req, res) => {
 
 export const userLogOut = async (req, res) => {
   try {
-    req.rootUser.tokens = await req.rootUser.tokens.filter((currentelement) => {
-      return currentelement.token !== req.token;
-    });
+    req.rootUser.token = '';
     await req.rootUser.save();
-
     res.clearCookie("AmazonAuth", { path: "/" });
     return res.status(201).json({ message: "successfully log out" });
   } catch (error) {
@@ -131,6 +146,7 @@ export const userLogOut = async (req, res) => {
 export const removeCartItem = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log({id})
     req.rootUser.cart = await req.rootUser.cart.filter((currentelement) => {
       return currentelement.id !== id;
     });
@@ -145,36 +161,28 @@ export const removeCartItem = async (req, res) => {
 export const incrementCartItem = async (req, res) => {
   const { id } = req.params;
   console.log({ id });
-  return res.json({ message: "CALLING" });
-  //   try {
-  //     const {id} = req.params
-  // console.log(id)
-  //     req.rootUser.cart =  await req.rootUser.cart.filter((currentelement) => {
-  //       return currentelement.id !== id;
-  //     });
-  //     await req.rootUser.save();
-  //     return res.status(201).json(req.rootUser);
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json("something went wrong");
-  //   }
+  // const user = await userModel.findOne({_id : req.userId})
+    try {
+       req.rootUser.quantityChangeOfProduct(id,'increment');
+      await req.rootUser.save();
+      return res.status(201).json(req.rootUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json("something went wrong");
+    }
 };
 
 export const decrementCartItem = async (req, res) => {
   const { id } = req.params;
-  console.log("calling");
-  //   try {
-  //     const {id} = req.params
-  // console.log(id)
-  //     req.rootUser.cart =  await req.rootUser.cart.filter((currentelement) => {
-  //       return currentelement.id !== id;
-  //     });
-  //     await req.rootUser.save();
-  //     return res.status(201).json(req.rootUser);
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json("something went wrong");
-  //   }
+  console.log({id})
+    try {
+       req.rootUser.quantityChangeOfProduct(id,'decrement');
+      await req.rootUser.save();
+      return res.status(201).json(req.rootUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json("something went wrong");
+    }
 };
 
 export const getUsers = async (req, res) => {

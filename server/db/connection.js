@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-const connection = async(password) => {
+const connection = async(url) => {
 
-    const url = `mongodb+srv://masumahmed64077:${password}@ecommerce.qoxeb50.mongodb.net/Amazonweb?retryWrites=true&w=majority`
     try {
         await mongoose.connect(url)
 

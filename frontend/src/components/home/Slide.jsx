@@ -51,7 +51,7 @@ const Slide = ({ title,products }) => {
         itemClass="carousel-item-padding-40-px"
         containerClass='carousel-container'
       >
-        {products.map(product => {
+        {products?.map(product => {
           return (
            <NavLink to={`/singleproduct/${product._id}`} >
              <div className="products_items" key={product._id}>

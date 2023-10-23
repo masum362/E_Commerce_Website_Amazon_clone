@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './input.css'
 import store from './Store.jsx'
 import { Provider } from 'react-redux'
 import AccountContexxt from './components/context/AccountContext.jsx'

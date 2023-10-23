@@ -8,23 +8,23 @@ import getProducts from '../redux/actions/Actions'
 import { ScaleLoader } from 'react-spinners'
 
 const Maincom = () => {
-
+const [isloading ,setIsloading] = useState(false)
   const { products } = useSelector(state => state.productsR)
   console.log(products)
   console.log(products.length)
 
-  const [isloading, setIsloading] = useState(false);
+  
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts())
-    setTimeout(() => {
-      setIsloading(true);
-    }, 1000);
+    if(products){
+    setIsloading(true);
+    }
   }, [dispatch])
 
 
-
+console.log(products)
 
 
 

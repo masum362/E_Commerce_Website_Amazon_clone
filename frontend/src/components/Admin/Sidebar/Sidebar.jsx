@@ -6,7 +6,7 @@ const Sidebar = () => {
       <div>
 
          <aside id="default-sidebar" className="z-40 w-[200px] h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-            <div className="h-screen px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
+            <div className="h-screen px-3 py-4 overflow-y-auto bg-[#232f3e] dark:bg-gray-800">
                <ul className="space-y-2 font-bold">
                   <li>
                      <Link to={'/dashboard'} className="flex items-center p-2 my-2 mt-4 text-yellow-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

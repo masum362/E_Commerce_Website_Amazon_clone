@@ -8,7 +8,7 @@ const authentication = async (req, res, next) => {
     const validUser = jwt.verify(token, process.env.SECRET_KEY);
     const rootUser = await userModel.findOne({
       _id: validUser._id,
-      "tokens.token": token,
+      token,
     });
 
     if (!rootUser) {

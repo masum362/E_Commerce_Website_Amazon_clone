@@ -37,7 +37,7 @@ const Buynow = () => {
 
   const handleDecrement =async (id) => {
     console.log(id)
-    await axios(`${base_url}/decrement/`, {
+    await axios(`${base_url}/decrement/${id}`, {
       method: 'GET',
       withCredentials: true,
       headers: {
@@ -45,7 +45,7 @@ const Buynow = () => {
         contentType: 'application/json'
       }
       }).then(res => {
-        console.log('success', res)
+        setAccount(res.data)
       }).catch ( err => console.log({err}) );
   }
 
@@ -59,9 +59,24 @@ const Buynow = () => {
         contentType: 'application/json'
       }
       }).then(res => {
-        console.log('success', res)
+        setAccount(res.data)
       }).catch ( err => console.log({err}) );
 
+  }
+
+  const deleteItem = async(itemid) => {
+    console.log({itemid})
+
+    await axios(`${base_url}/remove/${itemid}`,{
+      method:"DELETE",
+      headers:{
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      withCredentials: true
+    }).then(res => {
+      setAccount(res.data)
+    }).catch(err => console.log(err))
   }
 
   return (
@@ -81,7 +96,7 @@ const Buynow = () => {
 
             // console.log({ item })
             return (
-              <div className="item_containert" key={item._id}>
+              <div className="item_containert hover:bg-orange-100 cursor-pointer  transition-all duration-300" key={item._id}>
                 <img src={item?.detailUrl} alt="" />
                 <div className="item_details">
                   <h3>{item?.title.longTitle}</h3>
@@ -91,11 +106,11 @@ const Buynow = () => {
                   <p>Eligible for free shipping</p>
                   <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt="" />
                   <div>
-                    <button onClick={() => handleDecrement(item?.id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center">-</button>
+                    <button onClick={() => handleDecrement(item?._id)} disabled={item.quantity>0 ?false :true}  className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center hover:bg-orange-600 hover:text-white transition-all duration-150">-</button>
                     <button className="text-xl w-6 h-6  rrounded my-4 mx-1 ">{item.quantity}</button>
-                    <button onClick={() => handleIncrement(item?.id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center">+</button>
+                    <button onClick={() => handleIncrement(item?._id)} className="text-xl w-6 h-6 bg-gray-400 rounded my-4 mx-1 text-center items-center hover:bg-orange-600 hover:text-white transition-all duration-150">+</button>
                   </div>
-                  <Option deletedata={item?.id} itemid={item?.id} />
+                  <Option deleteItem={deleteItem} itemid={item?._id} />
                 </div>
                 <h3 className="item_price">₹{item?.price?.cost}</h3>
                 

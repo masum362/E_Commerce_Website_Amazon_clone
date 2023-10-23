@@ -41,8 +41,8 @@ router.post("/register", userRegister);
 router.post("/addproduct", addProduct);
 router.post("/login", userLogin);
 router.post("/cart/:id", authentication, cartUser);
-router.post("/increment/:id", incrementCartItem);
-router.get("/decrement", authentication, decrementCartItem);
+router.post("/increment/:id",authentication, incrementCartItem);
+router.get("/decrement/:id", authentication, decrementCartItem);
 router.post('/edit/:id',updateUser)
 router.post('/product/edit/:id',updateProduct)
 

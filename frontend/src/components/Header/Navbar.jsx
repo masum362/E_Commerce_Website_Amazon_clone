@@ -19,19 +19,7 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
-  const getAccountDetails = async () => {
-    await axios.get(`${base_url}/getaccountdetails`,
-      { withCredentials: true })
-      .then(response => {
-        setAccount(response.data)
-        console.log({ account });
-      }).catch(err => { console.log({ err }) });
-  }
 
-
-  useEffect(() => {
-    getAccountDetails();
-  }, [])
 
   const navigate = useNavigate();
 
@@ -64,15 +52,16 @@ const Navbar = () => {
 
 
   return (
-    <header>
+    <header className=''>
       <nav>
         <div className='left '>
 
           {/* sidebar Start */}
           <i className="hamburgur fa-solid fa-bars text-white  cursor-pointer" onClick={() => setSidebar(!sidebar)}></i>
 
-          {sidebar && <aside onClick={() => setSidebar(!sidebar)} className='fixed top-0 left-0 z-40 w-48 h-screen transition-transform translate-x-full sm:translate-x-0 '>
+          {sidebar && <aside onClick={() => setSidebar(!sidebar)} className='fixed top-0 left-0 z-40 w-48 h-screen  '>
             <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+            <i className="hamburgur space-y-2 px-3 my-2 fa-solid fa-bars text-black  cursor-pointer" onClick={() => setSidebar(!sidebar)}></i>
               {account && <span className='text-center w-full h-full m-auto ml-2'>Wellcome</span>}
               <hr />
               <ul className='space-y-2 font-medium ' >
@@ -129,22 +118,22 @@ const Navbar = () => {
 
         </div>
 
-        <div className='right'>
-          {!account && <div className='nav_btn'>
-            <NavLink className='text-white text-xl' to="/signin">Sign In</NavLink>
+        <div className='right gap-5 flex '>
+          {!account && <div className='text-white'>
+            <NavLink className='' to="/signin">Sign In</NavLink>
           </div>}
-          <div className='cart_btn'>
+
+          {account && <div className=''>
 
             <NavLink to="/buynow" type="button" className="relative inline-flex items-center p-2 text-sm font-medium text-center text-white  rounded-lg ">
               <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-white " >{account ? account.cart.length : 0}</div>
-              <i className="fa-solid fa-cart-shopping text-yellow-600" id='icon'></i>
+              <i class="fa-solid fa-cart-shopping text-base text-yellow-600"></i>
 
             </NavLink>
 
-          </div>
+          </div>}
           {
-            account ? <button onClick={() => setToggle(!toggle)} className="text-gray-600  bg-white hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  py-2  text-center inline-flex items-center dark:bg-white dark:hover:bg-white dark:focus:ring-blue-800 relative" type="button"><span className="text-gray-600   text-2xl mx-3 cursor-pointer" id="menu-button">{account.name[0].toUpperCase()}</span></button> :
-              <i className="fa-solid fa-user avtar text-white text-2xl mx-3"></i>
+            account && <button onClick={() => setToggle(!toggle)} className="text-gray-600  bg-white hover:bg-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  py-2  text-center inline-flex items-center dark:bg-white dark:hover:bg-white dark:focus:ring-blue-800 relative" type="button"><span className="text-gray-600   text-2xl mx-3 cursor-pointer" id="menu-button">{account.name[0].toUpperCase()}</span></button>
           }
 
 

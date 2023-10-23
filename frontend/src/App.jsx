@@ -20,30 +20,41 @@ import Dashboard from './components/Admin/Dashboard/Dashboard'
 import Error from './components/Error/Error'
 import { LoginContext } from './components/context/AccountContext'
 
+import axios from 'axios'
+import { base_url } from '../base'
+
 
 function App() {
   const [isloading, setIsloading] = useState(false);
-  // cosnt [isAdmin , setIsadmin] = useState(false);
+  const [isAdmin , setIsadmin] = useState(false);
 
-  const [isAdmin, setIsadmin] = useState(false);
 
   const { account,setAccount } = useContext(LoginContext);
-
-  const userRole = () => {
-    if(account?.role==='admin') {
-      return setIsadmin(true)
-    }else{
-     return setIsadmin(false)
-    }
-  }
+console.log({account})
+ 
   console.log(isAdmin)
 
+
+  const getAccountDetails = async () => {
+    await axios.get(`${base_url}/getaccountdetails`,
+      { withCredentials: true })
+      .then(response => {
+        setAccount(response.data)
+        console.log({ account });
+      }).catch(err => { console.log({ err }) });
+  }
+
+
   useEffect(() => {
+    getAccountDetails();
+    const userRole = () => {
+      if(account?.role==='admin') {
+        return setIsadmin(true)
+      }else{
+       return setIsadmin(false)
+      }
+    }
     userRole();
-    setTimeout(() => {
-      setIsloading(true);
-     
-    }, 1000);
   }, [])
 
 
@@ -51,7 +62,7 @@ function App() {
     <Router>
       <Navbar />
       <Newnav />
-      {isloading && <Routes>
+      <Routes>
         <Route path='/' element={<Maincom />} />
         <Route path='/signin' element={<Signin />} />
         <Route path='/signup' element={<Signup />} />
@@ -69,14 +80,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
         </>}
 
-      </Routes>}
-      {!isloading && <ScaleLoader
-
-        color={"#000"}
-        size={150}
-        style={{ margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}
-        aria-label="Loading Spinner"
-        data-testid="loader" />}
+      </Routes>
 
       <Footer />
     </Router>

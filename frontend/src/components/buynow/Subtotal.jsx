@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react'
 
 const Subtotal = ({account}) => {
 
-  const [ price , setPrice ] = useState(0)
+  const [ totalPrize , setTotalPrize ] = useState(0)
+  const [ quantity , setQuantity ] = useState(0)
 
   const totalAmount = () => {
-    let price = 0
+    let totalPrize = 0
+    let quantity = 0
+    let total = 0
      if(account?.cart?.length){
       account.cart?.map(product => {
         // console.log(items._Id)
-        
-        price +=product.price?.cost
+        totalPrize +=product.totalPrize
+        quantity += product.quantity
+
       })
      }
-    setPrice(price)
+    setTotalPrize(totalPrize)
+    setQuantity(quantity)
     
 }
 
@@ -23,7 +28,7 @@ useEffect(() => {
 
   return (
     <div className='sub_item'>
-      {account &&   <h3>Subtotal ({account ? (account.cart.length ) : 0})item :<strong style={{ fontWeight: "700", color: "#111" }}> ₹{price}.00</strong></h3>}
+      {account &&   <h3>Subtotal ({account ? (quantity ) : 0})item :<strong style={{ fontWeight: "700", color: "#111" }}> ₹{totalPrize }.00</strong></h3>}
     </div>
   )
 }
