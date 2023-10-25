@@ -3,6 +3,7 @@ import userModel from "../model/userSchema.js";
 
 const authentication = async (req, res, next) => {
   const token = req.cookies.AmazonAuth;
+  
 
   try {
     const validUser = jwt.verify(token, process.env.SECRET_KEY);
