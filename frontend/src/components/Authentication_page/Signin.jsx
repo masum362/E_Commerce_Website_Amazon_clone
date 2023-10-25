@@ -21,7 +21,7 @@ const Signin = () => {
         setTimeout(() => {
             setIsloading(true);
         }, 1000);
-    }, [])
+    }, [account])
 
     const formik = useFormik({
         initialValues: {
@@ -35,7 +35,9 @@ const Signin = () => {
         onSubmit: async (values) => {
             await axios.post(`${base_url}/login`, values, { withCredentials: true }).then(res => {
                 if (res.status== 201) {
-                    setAccount(res.data)
+                    console.log(res.data)
+                    setAccount(res.data.isUser)
+                    localStorage.setItem('token', res.data.token)
                     formik.resetForm();
                     navigate('/')
                     toast.success('login successfully', {

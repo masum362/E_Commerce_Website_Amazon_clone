@@ -26,7 +26,9 @@ const Cart = () => {
 
 
   const getindividualProduct = async (id) => {
-    await axios.get(`${base_url}/${id}`, { credentials: 'include' }).then(response => {
+    await axios.get(`${base_url}/${id}`, { withCredentials:true, headers:{
+      Authorization: 'Bearer ' +localStorage.getItem('token')
+    } }).then(response => {
       const data = response.data[0]
       if (response.status !== 201) {
         alert("no data available")
@@ -48,7 +50,8 @@ const Cart = () => {
       withCredentials: true,
       headers: {
         Accept: 'application/json',
-        contentType: 'application/json'
+        contentType: 'application/json',
+        Authorization: 'Bearer ' +localStorage.getItem('token')
       }
     }).then(res => {
       toast.success("product added in your cart",{

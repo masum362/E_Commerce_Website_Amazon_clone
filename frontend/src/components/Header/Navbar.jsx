@@ -32,10 +32,14 @@ const Navbar = () => {
       headers: {
         contentType: 'application/json',
         Accept: 'application/json',
+        headers:{
+          Authorization: 'Bearer ' +localStorage.getItem('token')
+        }
 
       },
       withCredentials: true
     }).then(res => {
+      console.log(res.data);
       setAccount('')
       navigate('/signin')
     }).catch(err => console.log(err));

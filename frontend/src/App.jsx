@@ -20,10 +20,6 @@ import Dashboard from './components/Admin/Dashboard/Dashboard'
 import Error from './components/Error/Error'
 import { LoginContext } from './components/context/AccountContext'
 
-import axios from 'axios'
-import { base_url } from '../base'
-
-
 function App() {
   const [isloading, setIsloading] = useState(false);
   const [isAdmin , setIsadmin] = useState(false);
@@ -32,21 +28,11 @@ function App() {
   const { account,setAccount } = useContext(LoginContext);
 console.log({account})
  
-  console.log(isAdmin)
+  console.log({isAdmin})
 
-
-  const getAccountDetails = async () => {
-    await axios.get(`${base_url}/getaccountdetails`,
-      { withCredentials: true })
-      .then(response => {
-        setAccount(response.data)
-        console.log({ account });
-      }).catch(err => { console.log({ err }) });
-  }
 
 
   useEffect(() => {
-    getAccountDetails();
     const userRole = () => {
       if(account?.role==='admin') {
         return setIsadmin(true)
@@ -55,7 +41,7 @@ console.log({account})
       }
     }
     userRole();
-  }, [isAdmin])
+  }, [account])
 
 
   return (
@@ -69,6 +55,7 @@ console.log({account})
         <Route path='/singleproduct/:id' element={<Cart />} />
         <Route path='/buynow' element={<Buynow />} />
         <Route path='*' element={<Error />} />
+        <Route path='/dashboard' element={<Dashboard />} />
 
         {isAdmin && <>
           <Route path='/users' element={<Users />} />
@@ -77,7 +64,7 @@ console.log({account})
           <Route path='/edit/:id' element={<EditUser />} />
           <Route path='/addproduct' element={<AddNewProduct />} />
           <Route path='/product/edit/:id' element={<EditProduct />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          
         </>}
 
       </Routes>

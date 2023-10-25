@@ -11,6 +11,8 @@ import {base_url} from '../../../base.js';
 import Option from './Option';
 
 const Buynow = () => {
+  const token = localStorage.getItem('usercookie')
+  console.log(token);
 
   const { account, setAccount } = useContext(LoginContext)
   const navigate = useNavigate();
@@ -42,7 +44,9 @@ const Buynow = () => {
       withCredentials: true,
       headers: {
         Accept: 'application/json',
-        contentType: 'application/json'
+        contentType: 'application/json',
+        Authorization: 'Bearer ' +token
+
       }
       }).then(res => {
         setAccount(res.data)
@@ -56,7 +60,8 @@ const Buynow = () => {
       withCredentials: true,
       headers: {
         Accept: 'application/json',
-        contentType: 'application/json'
+        contentType: 'application/json',
+        Authorization: 'Bearer ' +token
       }
       }).then(res => {
         setAccount(res.data)
@@ -71,7 +76,8 @@ const Buynow = () => {
       method:"DELETE",
       headers:{
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization: 'Bearer ' +token
       },
       withCredentials: true
     }).then(res => {
