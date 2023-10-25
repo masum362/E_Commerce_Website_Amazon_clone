@@ -55,7 +55,7 @@ console.log({account})
       }
     }
     userRole();
-  }, [])
+  }, [isAdmin])
 
 
   return (

@@ -19,16 +19,14 @@ const Cart = () => {
   console.log(id)
 
   useEffect(() => {
-    setTimeout(() => {
       getindividualProduct(id)
-    }, 1000);
   }, [id])
 
 
 
 
   const getindividualProduct = async (id) => {
-    await axios.get(`http://localhost:3002/${id}`, { credentials: 'include' }).then(response => {
+    await axios.get(`${base_url}/${id}`, { credentials: 'include' }).then(response => {
       const data = response.data[0]
       if (response.status !== 201) {
         alert("no data available")

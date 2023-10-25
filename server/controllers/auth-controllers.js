@@ -253,6 +253,7 @@ export const updateProduct = async (req, res) => {
 try {
   const file = req.files.image;
 
+
   cloudinary.uploader
     .upload(file.tempFilePath)
     .then((res) => {
@@ -331,6 +332,10 @@ export const addUser = async (req, res) => {
 };
 
 export const addProduct = async (req, res) => {
+  
+  const { title, description, category, mrp, cost, discount, tags, quantity } =
+  req.body;
+  
   console.log(
     { title },
     { description },
@@ -342,9 +347,6 @@ export const addProduct = async (req, res) => {
   );
 
   // console.log({imageData})
-
-  const { title, description, category, mrp, cost, discount, tags, quantity } =
-    req.body;
 
   // const API = "666020e795357f7c10e094438636a31d";
   try {

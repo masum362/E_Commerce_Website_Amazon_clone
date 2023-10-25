@@ -12,6 +12,7 @@ const authentication = async (req, res, next) => {
     });
 
     if (!rootUser) {
+      console.log("user not found")
       return res.status(404).json({ message: "user not found" });
     } else {
       req.token = token;
@@ -20,6 +21,7 @@ const authentication = async (req, res, next) => {
       next();
     }
   } catch (error) {
+    console.log('not authorized');
     return res.status(401).json({ message: "not authorized" });
   }
 };

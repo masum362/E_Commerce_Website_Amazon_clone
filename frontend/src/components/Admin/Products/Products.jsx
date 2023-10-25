@@ -11,7 +11,7 @@ const Products = () => {
 
     useEffect(() => {
         getAllProducts();
-    }, [])
+    }, [products])
 
 
 

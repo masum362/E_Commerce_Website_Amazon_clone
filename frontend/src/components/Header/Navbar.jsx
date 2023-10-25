@@ -61,7 +61,7 @@ const Navbar = () => {
 
           {sidebar && <aside onClick={() => setSidebar(!sidebar)} className='fixed top-0 left-0 z-40 w-48 h-screen  '>
             <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
-            <i className="hamburgur space-y-2 px-3 my-2 fa-solid fa-bars text-black  cursor-pointer" onClick={() => setSidebar(!sidebar)}></i>
+              <i className="hamburgur space-y-2 px-3 my-2 fa-solid fa-bars text-black  cursor-pointer" onClick={() => setSidebar(!sidebar)}></i>
               {account && <span className='text-center w-full h-full m-auto ml-2'>Wellcome</span>}
               <hr />
               <ul className='space-y-2 font-medium ' >
@@ -142,11 +142,16 @@ const Navbar = () => {
           <div onClick={() => setToggle(!toggle)} style={toggle ? { display: " block " } : { display: "none" }} className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-24 text-center dark:bg-gray-700 absolute right-12 top-14">
             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" >
 
+              {account?.role === 'admin' && <li>
+                <NavLink to="/dashboard" className="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</NavLink>
+              </li>}
+
+
               <li>
-                <a href="#" className="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                <NavLink to="#" className="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</NavLink>
               </li>
               <li>
-                <a href="#" className="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                <NavLink to="#" className="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</NavLink>
               </li>
               <li>
                 <NavLink to={'/'} className="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => logOut()}>Sign out</NavLink>

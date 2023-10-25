@@ -5,23 +5,15 @@ import { getSingleProduct, updateProduct } from '../Api/api.js';
 const EditProduct = () => {
 
 
-    const [product, setProduct] = useState({
-        url: "",
-        detailUrl: "",
-        title: {
-            shortTitle: "",
-            longTitle: ""
-        },
-        price: {
-            mrp: '',
-            cost: '',
-            discount: ""
-        },
-        description: "",
-        tagline: "",
-        quantity: Number,
-        rating: [],
-    })
+    const [shortTitle , setShortTitle] = useState('')
+    const [longTitle , setLongTitle] = useState('')
+    const [description , setDescription] = useState('')
+    const [mrp , setMRP] = useState('')
+    const [cost , setCost] = useState('')
+    const [discount , setDiscount] = useState('')
+    const [quantity , setQuantity] = useState('')
+    const [tagline , setTagLine] = useState('')
+    
 
     const [image, setImage] = useState(null)
 
@@ -32,37 +24,36 @@ const EditProduct = () => {
     }, [])
 
     const handleOnChange = (e) => {
-        e.preventDefault();
-        
-        if (e.target.value === 'longTitle') {
-            setProduct({
-                ...product.title, [e.target.name]: e.target.value
-            })
+        console.log(e.target.name)
+        console.log(e.target.value)
+    
+        if(e.target.name === 'shortTitle'){
+            setShortTitle(e.target.value);
         }
-       else if (e.target.value === 'shortTitle') {
-            setProduct({
-                ...product.title, [e.target.name]: e.target.value
-            })
+        if(e.target.name === 'longTitle'){
+            setLongTitle(e.target.value);
         }
-       else if (e.target.value === 'mrp') {
-            setProduct({
-                ...product.price, [e.target.name]: e.target.value
-            })
+        if(e.target.name === 'description'){
+            setDescription(e.target.value);
         }
-       else if (e.target.value === 'cost') {
-            setProduct({
-                ...product.price, [e.target.name]: e.target.value
-            })
+        if(e.target.name === 'mrp'){
+            setMRP(e.target.value);
         }
-       else if (e.target.value === 'discount') {
-            setProduct({
-                ...product.price, [e.target.name]: e.target.value
-            })
+       
+        if(e.target.name === 'cost'){
+            setCost(e.target.value);
         }
-        else{
-            setProduct({ ...product, [e.target.name]: e.target.value })
+       
+        if(e.target.name === 'discount'){
+            setDiscount(e.target.value);
         }
-
+        if(e.target.name === 'quantity'){
+            setDiscount(e.target.value);
+        }
+        if(e.target.name === 'tagline'){
+            setTagLine(e.target.value);
+        }
+       
     }
 
     const handleImageChange = (e) => {
@@ -75,8 +66,21 @@ const EditProduct = () => {
 
 
     const loaduserData = async () => {
-        await getSingleProduct(id).then(res => setProduct(res.data[0])).catch(err => console.log(err))
+        await getSingleProduct(id).then(res =>{
+
+        setImage(res.data[0].url)
+        setLongTitle(res.data[0].title.longTitle)
+        setShortTitle(res.data[0].title.shortTitle)
+        setMRP(res.data[0].price.mrp)
+        setCost(res.data[0].price.cost)
+        setDiscount(res.data[0].discount)
+        setTagLine(res.data[0].tagline)
+        setQuantity(res.data[0].quantity)
+    }).catch(err => console.log(err))
+            
     }
+
+    console.log({longTitle , shortTitle , description ,mrp , cost , discount , tagline ,quantity,image })
 
 
     const handleSubmit = async (e) => {
@@ -84,11 +88,6 @@ const EditProduct = () => {
 
         const formData = new FormData();
         formData.append('image', image);
-
-        const { description, tagline, quantity } = product;
-        const { shortTitle, longTitle } = product.title;
-        const { mrp, cost, discount } = product.price;
-
         formData.append('title', longTitle);
         formData.append('description', description);
         formData.append('category', shortTitle);
@@ -116,7 +115,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-title" name="longTitle" type="text" value={product?.title?.longTitle} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-title" name="longTitle" type="text" value={longTitle} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -127,7 +126,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <textarea rows={8} className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-description" name="description" type="text" value={product?.description} onChange={(e) => handleOnChange(e)} />
+                        <textarea rows={8} className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-description" name="description" type="text" value={description} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -138,7 +137,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-category" name="shortTitle" type="text" value={product?.title?.shortTitle} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-category" name="shortTitle" type="text" value={shortTitle} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -160,7 +159,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-mrp" name="mrp" type="text" value={product?.price?.mrp} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-mrp" name="mrp" type="text" value={mrp} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -171,7 +170,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-cost" name="cost" type="text" value={product?.price?.cost} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-cost" name="cost" type="text" value={cost} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -182,7 +181,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-discount" name="discount" type="text" value={product?.price?.discount} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-discount" name="discount" type="text" value={discount} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -194,7 +193,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-quantity" name="quantity" type="number" value={product?.quantity} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-quantity" name="quantity" type="number" value={quantity} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
@@ -205,7 +204,7 @@ const EditProduct = () => {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-tags" name="tagline" type="text" value={product?.tagline} onChange={(e) => handleOnChange(e)} />
+                        <input className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="product-tags" name="tagline" type="text" value={tagline} onChange={(e) => handleOnChange(e)} />
                     </div>
                 </div>
 
