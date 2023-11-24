@@ -5,6 +5,12 @@ import axios from "axios";
 import { v2 as cloudinary } from "cloudinary";
 import { v4 as uuidv4 } from "uuid";
 import { response } from "express";
+import NodeCache from 'node-cache'
+
+
+
+const myCache = new NodeCache();
+
 
 cloudinary.config({
   cloud_name: "dhjko1yrs",
@@ -14,8 +20,14 @@ cloudinary.config({
 
 export const getAllProducts = async (req, res) => {
   try {
+    if(myCache.has('product')){
+      return res.status(201).json(myCache.get('product'));
+    }
+   else{
     const allProducts = await productsModel.find();
+    myCache.set('product', allProducts)
     return res.status(201).json(allProducts);
+   }
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -196,8 +208,15 @@ export const getUsers = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const allProduct = await productsModel.find({});
-    res.status(201).json(allProduct);
+    if(myCache.has('product')){
+      console.log('coming from cache')
+      return res.status(201).json(myCache.get('product'));
+    }
+   else{
+    const allProducts = await productsModel.find();
+    myCache.set('product', allProducts)
+    return res.status(201).json(allProducts);
+   }
   } catch (error) {
     console.log("dara reading error: " + error);
   }
@@ -276,6 +295,7 @@ try {
       });
     userModel.updateOne({ _id: req.params.id },product)
         .then((res) => {
+          myCache.del('product')
           return res;
         })
         .catch((err) => {
@@ -313,6 +333,7 @@ export const deleteProduct = async (req, res) => {
   console.log(req.params.id)
   try {
     const product = await productsModel.deleteOne({ _id: req.params.id });
+    myCache.del('product')
     res.status(201).json(product);
   } catch (error) {
     console.log("dara reading error: " + error);
@@ -399,6 +420,7 @@ export const addProduct = async (req, res) => {
         product
           .save()
           .then((res) => {
+            myCache.del('product')
             return res;
           })
           .catch((err) => {

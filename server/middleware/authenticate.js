@@ -2,9 +2,8 @@ import jwt from "jsonwebtoken";
 import userModel from "../model/userSchema.js";
 
 const authentication = async (req, res, next) => {
-  const token = req.cookies.AmazonAuth;
+  const token = req.headers.authorization.split(' ')[1]
   
-
   try {
     const validUser = jwt.verify(token, process.env.SECRET_KEY);
     const rootUser = await userModel.findOne({
