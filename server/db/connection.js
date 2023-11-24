@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const connection = async(url) => {
 
+    console.log({url})
     try {
         await mongoose.connect(url)
 

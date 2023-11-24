@@ -27,9 +27,8 @@ app.use('/',router)
 
 
 const port = process.env.PORT || 3002;
-const mongodbURI = process.env.mongodbURI
 
-connection(mongodbURI)
+connection(process.env.mongodbURI)
 app.listen(port , (req,res)=> {
     console.log(`server listening on port ${port}`);
 })
